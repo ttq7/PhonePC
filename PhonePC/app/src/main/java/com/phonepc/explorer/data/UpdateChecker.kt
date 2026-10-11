@@ -24,6 +24,15 @@ object UpdateChecker {
 
     private const val API = "https://api.github.com/repos/ttq7/PhonePC/releases/latest"
 
+    /**
+     * Endpoint used for the check. Overridable so the updater can be tested
+     * against a local server instead of by publishing throwaway releases —
+     * the standard approach for update systems, and the reason the default
+     * lives in one place rather than inline at the call site.
+     */
+    @Volatile
+    var endpoint: String = API
+
     data class Release(
         val tag: String,
         val title: String,
@@ -46,10 +55,10 @@ object UpdateChecker {
         "?"
     }
 
-    fun check(context: Context): Check {
+    fun check(context: Context, url: String = resolveEndpoint(context)): Check {
         val current = installedVersion(context)
         val body = try {
-            httpGet(API)
+            httpGet(url)
         } catch (e: Exception) {
             return Check.Failed(e.message ?: e.javaClass.simpleName)
         }
@@ -103,6 +112,30 @@ object UpdateChecker {
     private fun numbers(v: String): List<Int> =
         Regex("\\d+").findAll(v).mapNotNull { it.value.toIntOrNull() }.toList()
 
+    /**
+     * Resolves the endpoint, allowing a local override.
+     *
+     * An update system is awkward to test: you either publish throwaway
+     * releases or you cannot exercise the code at all. Reading the address from
+     * a file in the app's own external files directory makes the whole path —
+     * request, JSON, download, signature check — testable against a local
+     * server, which is how this kind of component is normally verified.
+     *
+     * The file lives under Android/data/<pkg>/files, which other apps cannot
+     * write to on Android 11+. Delete it and the GitHub default applies.
+     */
+    private fun resolveEndpoint(context: Context): String {
+        return try {
+            val f = File(context.getExternalFilesDir(null), "update_endpoint.txt")
+            if (f.isFile) {
+                val v = f.readText().trim()
+                if (v.startsWith("http")) v else endpoint
+            } else endpoint
+        } catch (e: Exception) {
+            endpoint
+        }
+    }
+
     // ---- download & install ----------------------------------------------
 
     /** Download the release APK. [onProgress] is called with 0..100, or -1 when unknown. */
@@ -142,14 +175,45 @@ object UpdateChecker {
         return out
     }
 
-    /** Hand the downloaded APK to the system installer. */
+    /**
+     * Hand the downloaded APK to the system installer.
+     *
+     * The signature is checked first. An update path that installs whatever the
+     * network hands it is a supply-chain hole: a hijacked endpoint or a
+     * tampered repo could push any APK, and the system installer would happily
+     * run it as an update. Android itself enforces signature equality at
+     * install time, but failing here gives a comprehensible message instead of
+     * a bare "App not installed".
+     */
     fun install(context: Context, apk: File) {
+        if (!sameSigner(context, apk)) {
+            throw SecurityException("下载的安装包签名与本机应用不一致，已拒绝安装")
+        }
         val uri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", apk)
         context.startActivity(
             Intent(Intent.ACTION_VIEW)
                 .setDataAndType(uri, "application/vnd.android.package-archive")
                 .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
         )
+    }
+
+    /** true when [apk] is signed by the same key as the running app. */
+    fun sameSigner(context: Context, apk: File): Boolean = try {
+        @Suppress("DEPRECATION")
+        val expected = context.packageManager
+            .getPackageInfo(context.packageName, android.content.pm.PackageManager.GET_SIGNATURES)
+            .signatures
+        @Suppress("DEPRECATION")
+        val actual = context.packageManager
+            .getPackageArchiveInfo(apk.absolutePath, android.content.pm.PackageManager.GET_SIGNATURES)
+            ?.signatures
+        when {
+            expected == null || actual == null -> false
+            expected.size != actual.size -> false
+            else -> expected.indices.all { expected[it] == actual[it] }
+        }
+    } catch (e: Exception) {
+        false
     }
 
     // ---- http ------------------------------------------------------------

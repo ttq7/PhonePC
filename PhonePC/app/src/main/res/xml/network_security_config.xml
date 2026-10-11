@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  HTTPS everywhere, with cleartext allowed only on the loopback addresses.
+
+  The updater reads its endpoint from a file so it can be exercised against a
+  local fake-release server; that server speaks plain HTTP, and Android 9+
+  blocks cleartext by default. Opening cleartext globally would be the lazy fix
+  and would weaken every other connection, so it is scoped to loopback only.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">127.0.0.1</domain>
+        <domain includeSubdomains="false">localhost</domain>
+        <!-- the host machine as seen from the Android emulator -->
+        <domain includeSubdomains="false">10.0.2.2</domain>
+    </domain-config>
+</network-security-config>
