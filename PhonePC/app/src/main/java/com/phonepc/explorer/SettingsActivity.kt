@@ -1,6 +1,8 @@
 package com.phonepc.explorer
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Toast
@@ -9,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.phonepc.explorer.data.AppSettings
 import com.phonepc.explorer.data.UpdateChecker
 import com.phonepc.explorer.databinding.ActivitySettingsBinding
+import com.phonepc.explorer.databinding.DialogAboutBinding
 import com.phonepc.explorer.databinding.DialogApiBinding
 import com.phonepc.explorer.databinding.DialogInputBinding
 import com.phonepc.explorer.net.HttpFileServer
@@ -28,6 +31,7 @@ class SettingsActivity : AppCompatActivity() {
         b.rowPlugins.setOnClickListener { showPlugins() }
         b.rowShare.setOnClickListener { editShareUrl() }
         b.rowApi.setOnClickListener { editApi() }
+        b.rowAbout.setOnClickListener { showAbout() }
     }
 
     override fun onResume() {
@@ -120,6 +124,42 @@ class SettingsActivity : AppCompatActivity() {
             .show()
     }
 
+
+    // ---- about ------------------------------------------------------------
+
+    private fun showAbout() {
+        val vb = DialogAboutBinding.inflate(LayoutInflater.from(this))
+        vb.aboutVersion.text = getString(R.string.about_version, UpdateChecker.installedVersion(this))
+        vb.aboutAuthor.text = getString(R.string.about_author)
+        vb.aboutEmail.text = getString(R.string.about_email)
+        vb.aboutRepo.text = getString(R.string.about_repo)
+        vb.aboutTech.text = getString(R.string.about_tech)
+
+        vb.aboutEmail.setOnClickListener {
+            try {
+                startActivity(
+                    Intent(Intent.ACTION_SENDTO)
+                        .setData(Uri.parse("mailto:" + getString(R.string.about_email)))
+                        .putExtra(Intent.EXTRA_SUBJECT, getString(R.string.about_mail_subject))
+                )
+            } catch (e: Exception) {
+                toast(getString(R.string.about_no_app))
+            }
+        }
+        vb.aboutRepo.setOnClickListener {
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/ttq7/PhonePC")))
+            } catch (e: Exception) {
+                toast(getString(R.string.about_no_app))
+            }
+        }
+
+        AlertDialog.Builder(this, R.style.Theme_PhonePC_Dialog)
+            .setTitle(R.string.settings_about)
+            .setView(vb.root)
+            .setPositiveButton(R.string.ok, null)
+            .show()
+    }
     private fun toast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 
     companion object {
