@@ -124,6 +124,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.root)
+        com.phonepc.explorer.data.AppSettings.init(this)
         prefs = Prefs(this)
         sortSpec = prefs.sortSpec
         viewMode = prefs.viewMode
@@ -382,6 +383,7 @@ class MainActivity : AppCompatActivity() {
             item.id == "home" -> navigateTo(HOME_PATH)
             item.id == "thispc" -> navigateTo(null)
             item.id == "quickfind" -> startActivity(QuickFindActivity.intent(this))
+            item.id == "settings" -> startActivity(SettingsActivity.intent(this))
             item.id == "network" -> startActivity(
                 NetShareActivity.intent(this, Environment.getExternalStorageDirectory().absolutePath)
             )
@@ -826,6 +828,7 @@ class MainActivity : AppCompatActivity() {
             R.drawable.ic_recyclebin,
             null
         )
+        rows += NavRow.Item("settings", getString(R.string.settings), R.drawable.g_settings, null)
         return rows
     }
 

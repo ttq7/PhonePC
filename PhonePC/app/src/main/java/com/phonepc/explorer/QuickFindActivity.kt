@@ -15,7 +15,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.phonepc.explorer.data.AppSettings
 import com.phonepc.explorer.data.QuickFind
+import com.phonepc.explorer.data.RemoteParser
 import com.phonepc.explorer.data.Semantic
 import com.phonepc.explorer.data.SemanticAnchors
 import com.phonepc.explorer.data.ZipRepo
@@ -45,6 +47,7 @@ class QuickFindActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         b = ActivityQuickfindBinding.inflate(layoutInflater)
         setContentView(b.root)
+        com.phonepc.explorer.data.AppSettings.init(this)
 
         adapter = FileListAdapter(
             onClick = { open(it) },
@@ -134,7 +137,14 @@ class QuickFindActivity : AppCompatActivity() {
         val q = b.searchInput.text.toString()
         if (QuickFind.size == 0) { showEmptyHint(); return }
         io.execute {
-            val r = QuickFind.search(q)
+            // optional cloud normalisation: the API only rewrites the phrasing,
+        // the local parser still computes the time window and extensions
+        var effective = q
+        if (AppSettings.isApiReady(this) && q.any { it.code > 0x2E80 }) {
+            val canon = RemoteParser.canonicalize(this, q)
+            if (!canon.isNullOrBlank()) effective = canon
+        }
+        val r = QuickFind.search(effective)
             main.post {
                 lastScanned = r.scanned
                 val items = r.hits.map { entryOf(it) }

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/win_surface"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titlebar_height"
+        android:background="@color/win_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="2dp"
+        android:paddingEnd="6dp">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:background="@drawable/bg_icon_button"
+            android:padding="7dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/g_back"
+            app:tint="@color/icon_tint" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_tab"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/g_settings"
+                app:tint="@color/icon_tint" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text="@string/settings"
+                android:textColor="@color/win_text"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/win_divider" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <!-- 1. update -->
+            <LinearLayout
+                android:id="@+id/rowUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_dialog_input"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_update"
+                    android:textColor="@color/win_text"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/updSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/win_text_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 2. plugins -->
+            <LinearLayout
+                android:id="@+id/rowPlugins"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_dialog_input"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_plugins"
+                    android:textColor="@color/win_text"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/pluginSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="@string/settings_plugins_summary"
+                    android:textColor="@color/win_text_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 3. share address -->
+            <LinearLayout
+                android:id="@+id/rowShare"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_dialog_input"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_share"
+                    android:textColor="@color/win_text"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/shareSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/win_text_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- 4. remote search api -->
+            <LinearLayout
+                android:id="@+id/rowApi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_dialog_input"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_api"
+                    android:textColor="@color/win_text"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/apiSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textColor="@color/win_text_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="@string/settings_privacy"
+                android:textColor="@color/win_text_secondary"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

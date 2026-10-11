@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.phonepc.explorer.databinding.ActivityNetshareBinding
 import com.phonepc.explorer.databinding.ViewCommandButtonBinding
+import com.phonepc.explorer.data.AppSettings
 import com.phonepc.explorer.net.NetShare
 import java.io.File
 
@@ -29,6 +30,7 @@ class NetShareActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         b = ActivityNetshareBinding.inflate(layoutInflater)
         setContentView(b.root)
+        com.phonepc.explorer.data.AppSettings.init(this)
 
         val path = intent.getStringExtra(EXTRA_PATH)
         shareDir = if (!path.isNullOrEmpty()) File(path) else File("/")
@@ -100,7 +102,7 @@ class NetShareActivity : AppCompatActivity() {
 
     private fun startShare() {
         try {
-            NetShare.start(shareDir)
+            NetShare.start(shareDir, AppSettings.shareUrl)
             render()
             val url = NetShare.url
             toast(if (url != null) getString(R.string.net_started, url) else getString(R.string.net_no_wifi))
