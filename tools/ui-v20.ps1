@@ -1,5 +1,6 @@
+$root = if ($PSScriptRoot) { Split-Path -Parent $PSScriptRoot } elseif ($env:PHONEPC_ROOT) { $env:PHONEPC_ROOT } else { (Get-Location).Path }
+
 # project root: this script lives in <root>\tools
-$root = if ($PSScriptRoot) { Split-Path -Parent $PSScriptRoot }
         elseif ($env:PHONEPC_ROOT) { $env:PHONEPC_ROOT }
         else { (Get-Location).Path }
 

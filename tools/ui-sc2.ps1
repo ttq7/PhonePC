@@ -1,5 +1,6 @@
 $root = if ($PSScriptRoot) { Split-Path -Parent $PSScriptRoot } elseif ($env:PHONEPC_ROOT) { $env:PHONEPC_ROOT } else { (Get-Location).Path }
 
+
 $sdk = 'C:\Users\asd32\AppData\Local\TyranoToolKit\android-sdk'
 $adb = "$sdk\platform-tools\adb.exe"
 $dev = 'emulator-5554'

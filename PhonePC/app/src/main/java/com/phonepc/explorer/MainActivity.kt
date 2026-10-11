@@ -1094,6 +1094,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(NetShareActivity.intent(this, currentPath))
         }
         add(getString(R.string.cmd_edit_path)) { enterPathEdit() }
+        add(getString(R.string.update_check)) { UpdateFlow.start(this) }
         if (selection.size >= 2) {
             add(getString(R.string.cmd_batch_rename)) { batchRename() }
         }

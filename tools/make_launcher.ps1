@@ -1,4 +1,5 @@
 # Compose the launcher
+
 $root = if ($PSScriptRoot) { Split-Path -Parent $PSScriptRoot } elseif ($env:PHONEPC_ROOT) { $env:PHONEPC_ROOT } else { (Get-Location).Path }
  icon: Windows accent tile + white phone glyph.
 param([string]$Root)

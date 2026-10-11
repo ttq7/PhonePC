@@ -12,8 +12,8 @@ android {
         applicationId = "com.phonepc.explorer"
         minSdk = 26
         targetSdk = 36
-        versionCode = 15
-        versionName = "2.2"
+        versionCode = 16
+        versionName = "2.5"
         resourceConfigurations += listOf("zh", "en")
     }
 
