@@ -1,0 +1,54 @@
+# ---- build output ----------------------------------------------------------
+PhonePC/build/
+PhonePC/app/build/
+PhonePC/.gradle/
+.gradle-home/
+.android-home/
+build/
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# ---- IDE -------------------------------------------------------------------
+.idea/
+*.iml
+.vscode/
+local.properties
+
+# ---- heavy / regenerable ---------------------------------------------------
+# emb_u8.bin IS committed: the app cannot build without it.
+# The 23 MB source ONNX is not — regenerate it from ModelScope with
+#   python tools\dump_table.py   (download command in the README)
+models/
+promo/
+dist/*.apk
+dist/*.mp4
+
+# Windows artwork, extracted from this machine's own DLLs
+tools/glyphs_raw/
+tools/icons_raw/
+tools/photos/
+tools/*.png
+tools/*.log
+tools/*_out.txt
+tools/run2.txt
+tools/onnx2tf_help.txt
+tools/static*.txt
+tools/probe_out.txt
+
+# ---- scratch ---------------------------------------------------------------
+.tmp/
+.pipcache/
+.venv-ml/
+*.bak
+Thumbs.db
+desktop.ini
+
+# ---- secrets ---------------------------------------------------------------
+*.pem
+*.key
+id_ed25519*
+!id_ed25519.pub
+.env
+secrets.properties

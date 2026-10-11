@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Windows 11 light palette -->
+    <color name="win_accent">#0067C0</color>
+    <color name="win_accent_hover">#1975C5</color>
+    <color name="win_bg">#F3F3F3</color>
+    <color name="win_surface">#FFFFFF</color>
+    <color name="win_surface_alt">#FBFBFB</color>
+    <color name="win_layer">#F3F3F3</color>
+    <color name="win_card">#FFFFFF</color>
+    <color name="win_border">#E5E5E5</color>
+    <color name="win_divider">#E0E0E0</color>
+    <color name="win_text">#1B1B1B</color>
+    <color name="win_text_secondary">#616161</color>
+    <color name="win_text_disabled">#9E9E9E</color>
+    <color name="win_hover">#E9E9E9</color>
+    <color name="win_pressed">#DADADA</color>
+    <color name="win_selected">#E5F1FB</color>
+    <color name="win_selected_hover">#D3E8F7</color>
+    <color name="win_selected_bar">#0067C0</color>
+    <color name="win_commandbar">#FAFAFA</color>
+    <color name="win_statusbar">#F3F3F3</color>
+    <color name="win_drawer">#F3F3F3</color>
+    <color name="win_tab_active">#FFFFFF</color>
+    <color name="win_tab_inactive">#00000000</color>
+    <color name="win_scrim">#66000000</color>
+    <color name="icon_tint">#1B1B1B</color>
+    <color name="icon_tint_secondary">#5F5F5F</color>
+    <color name="icon_tint_disabled">#B0B0B0</color>
+    <color name="ripple_light">#20000000</color>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/navRoot"
+    android:layout_width="match_parent"
+    android:layout_height="34dp"
+    android:background="@drawable/bg_row"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="14dp"
+    android:paddingEnd="12dp">
+
+    <ImageView
+        android:id="@+id/navIcon"
+        android:layout_width="@dimen/content_icon_nav"
+        android:layout_height="@dimen/content_icon_nav"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/navText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/win_text"
+        android:textSize="13sp" />
+</LinearLayout>

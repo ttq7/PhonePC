@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.PhonePC" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/win_accent</item>
+        <item name="colorPrimaryDark">@color/win_bg</item>
+        <item name="colorAccent">@color/win_accent</item>
+        <item name="android:windowBackground">@color/win_bg</item>
+        <item name="android:textColorPrimary">@color/win_text</item>
+        <item name="android:textColorSecondary">@color/win_text_secondary</item>
+        <item name="android:colorBackground">@color/win_bg</item>
+        <item name="android:statusBarColor">@color/win_bg</item>
+        <item name="android:navigationBarColor">@color/win_bg</item>
+        <item name="android:windowLightStatusBar">@bool/window_light_status_bar</item>
+        <item name="android:textColorHint">@color/win_text_disabled</item>
+    </style>
+
+    <style name="Theme.PhonePC.Dialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorAccent">@color/win_accent</item>
+        <item name="android:textColorPrimary">@color/win_text</item>
+        <item name="android:textColorSecondary">@color/win_text_secondary</item>
+    </style>
+
+    <style name="WinCommandLabel">
+        <item name="android:textSize">@dimen/text_command</item>
+        <item name="android:textColor">@color/win_text</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/crumbRoot"
+    android:layout_width="wrap_content"
+    android:layout_height="28dp"
+    android:background="@drawable/bg_crumb"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="5dp"
+    android:paddingEnd="5dp">
+
+    <ImageView
+        android:id="@+id/crumbIcon"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="5dp"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/crumbText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="140dp"
+        android:singleLine="true"
+        android:ellipsize="middle"
+        android:textColor="@color/win_text"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/crumbChevron"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginStart="4dp"
+        android:alpha="0.55"
+        android:scaleType="fitCenter"
+        android:src="@drawable/g_chevron_rt"
+        app:tint="@color/icon_tint" />
+</LinearLayout>

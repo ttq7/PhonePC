@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <!-- ================= main column ================= -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/win_surface"
+        android:orientation="vertical">
+
+        <!-- 1. title bar / tab strip (Win11 Explorer tabs) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/titlebar_height"
+            android:background="@color/win_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="2dp"
+            android:paddingEnd="2dp">
+
+            <ImageView
+                android:id="@+id/btnMenu"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:background="@drawable/bg_icon_button"
+                android:contentDescription="@string/nav_thispc"
+                android:padding="7dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/g_menu"
+                app:tint="@color/icon_tint" />
+
+            <HorizontalScrollView
+                android:id="@+id/tabScroll"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="2dp"
+                android:layout_weight="1"
+                android:fillViewport="true"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/tabStrip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+
+            <ImageView
+                android:id="@+id/tabSpinner"
+                android:layout_width="30dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="2dp"
+                android:background="@drawable/bg_icon_button"
+                android:padding="6dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/g_chevron_dn"
+                app:tint="@color/icon_tint" />
+
+            <ImageView
+                android:id="@+id/btnNewTab"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="2dp"
+                android:background="@drawable/bg_icon_button"
+                android:padding="7dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/g_add"
+                app:tint="@color/icon_tint" />
+        </LinearLayout>
+
+        <!-- 2. address toolbar: nav buttons + breadcrumb + search -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:background="@color/win_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="2dp"
+            android:paddingEnd="6dp">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="34dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_icon_button"
+                android:padding="7dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/g_back"
+                app:tint="@color/icon_tint" />
+
+            <ImageView
+                android:id="@+id/btnForward"
+                android:layout_width="34dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_icon_button"
+                android:padding="7dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/g_forward"
+                app:tint="@color/icon_tint" />
+
+            <ImageView
+                android:id="@+id/btnUp"
+                android:layout_width="34dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_icon_button"
+                android:padding="7dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/g_up"
+                app:tint="@color/icon_tint" />
+
+            <ImageView
+                android:id="@+id/btnRefresh"
+                android:layout_width="34dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_icon_button"
+                android:padding="7dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/g_refresh"
+                app:tint="@color/icon_tint" />
+
+            <!-- address bar: breadcrumb by default, an editable path box on tap -->
+            <FrameLayout
+                android:id="@+id/addressBox"
+                android:layout_width="0dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1.8"
+                android:background="@drawable/bg_search">
+
+                <HorizontalScrollView
+                    android:id="@+id/crumbScroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fillViewport="true"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/crumbContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp" />
+                </HorizontalScrollView>
+
+                <EditText
+                    android:id="@+id/pathInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:fontFamily="monospace"
+                    android:hint="@string/path_hint"
+                    android:imeOptions="actionGo"
+                    android:inputType="textUri"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/win_text"
+                    android:textColorHint="@color/win_text_disabled"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/searchBox"
+                android:layout_width="0dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="0.8"
+                android:background="@drawable/bg_search"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="8dp"
+                android:paddingEnd="4dp">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/g_search"
+                    app:tint="@color/icon_tint_secondary"
+                    xmlns:app="http://schemas.android.com/apk/res-auto" />
+
+                <EditText
+                    android:id="@+id/searchInput"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="6dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="@string/search_hint"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textColor="@color/win_text"
+                    android:textColorHint="@color/win_text_disabled"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:id="@+id/btnClearSearch"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/g_close"
+                    android:visibility="gone"
+                    app:tint="@color/icon_tint_secondary"
+                    xmlns:app="http://schemas.android.com/apk/res-auto" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 3. command bar -->
+        <LinearLayout
+            android:id="@+id/commandBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/commandbar_height"
+            android:background="@color/win_commandbar"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp">
+
+            <HorizontalScrollView
+                android:id="@+id/commandScroll"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/commandContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
+
+            <ImageView
+                android:id="@+id/btnOverflow"
+                android:layout_width="34dp"
+                android:layout_height="30dp"
+                android:background="@drawable/bg_icon_button"
+                android:padding="7dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/g_more"
+                app:tint="@color/icon_tint" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/win_divider" />
+
+        <!-- 4. content -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/win_surface">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fileList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="8dp"
+                android:scrollbars="vertical" />
+
+            <LinearLayout
+                android:id="@+id/emptyView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:alpha="0.75"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_folder" />
+
+                <TextView
+                    android:id="@+id/emptyText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="32dp"
+                    android:gravity="center"
+                    android:text="@string/empty_folder"
+                    android:textColor="@color/win_text_secondary"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/loadingView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/win_surface"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ProgressBar
+                    android:id="@+id/opSpinner"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:indeterminateTint="@color/win_accent" />
+
+                <ProgressBar
+                    android:id="@+id/opProgress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="230dp"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="16dp"
+                    android:max="100"
+                    android:progressTint="@color/win_accent"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/loadingText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/loading"
+                    android:textColor="@color/win_text_secondary"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/btnCancelOp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_outline_button"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:minWidth="96dp"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"
+                    android:text="@string/op_cancel"
+                    android:textColor="@color/win_text"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </FrameLayout>
+
+        <!-- per-operation undo strip, like Explorer's "撤销" prompt -->
+        <LinearLayout
+            android:id="@+id/undoBar"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:background="@color/win_card"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="14dp"
+            android:paddingEnd="6dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/undoText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/win_text"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/undoAction"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_command_button"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:minWidth="72dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/undo"
+                android:textColor="@color/win_accent"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- 5. status bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/statusbar_height"
+            android:background="@color/win_statusbar"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingEnd="6dp">
+
+            <TextView
+                android:id="@+id/statusText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/win_text_secondary"
+                android:textSize="@dimen/text_status" />
+
+            <ImageView
+                android:id="@+id/statusDetails"
+                android:layout_width="32dp"
+                android:layout_height="26dp"
+                android:background="@drawable/bg_icon_button"
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/g_details"
+                app:tint="@color/icon_tint_secondary" />
+
+            <ImageView
+                android:id="@+id/statusIcons"
+                android:layout_width="32dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="2dp"
+                android:background="@drawable/bg_icon_button"
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/g_grid"
+                app:tint="@color/icon_tint_secondary" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- ================= navigation pane ================= -->
+    <LinearLayout
+        android:layout_width="272dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@drawable/bg_drawer"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/titlebar_height"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:text="@string/app_name"
+            android:textColor="@color/win_text"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/navList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingBottom="12dp"
+            android:scrollbars="none" />
+    </LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

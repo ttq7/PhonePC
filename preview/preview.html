@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>此手机 · 界面预览</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #d9d9de;
+    font-family: "Segoe UI Variable Text", "Segoe UI", "Microsoft YaHei UI", sans-serif;
+    display: flex; gap: 40px; padding: 28px; align-items: flex-start;
+  }
+  .phonerow { display: flex; gap: 40px; }
+  .phone {
+    width: 390px; height: 844px; background: #F3F3F3; overflow: hidden;
+    border-radius: 26px; box-shadow: 0 10px 34px rgba(0,0,0,.30);
+    display: flex; flex-direction: column; position: relative;
+    color: #1B1B1B;
+  }
+  .androidstatus {
+    height: 24px; background: #F3F3F3; display: flex; align-items: center;
+    justify-content: space-between; padding: 0 14px; font-size: 11px; color: #1B1B1B;
+    flex: 0 0 auto;
+  }
+  .androidstatus .dots { letter-spacing: 2px; }
+
+  /* ---- title bar / tabs ---- */
+  .titlebar {
+    height: 40px; display: flex; align-items: center; padding: 0 2px; gap: 2px; flex: 0 0 auto;
+  }
+  .iconbtn {
+    width: 34px; height: 32px; display: flex; align-items: center; justify-content: center;
+    border-radius: 4px;
+  }
+  .iconbtn img { width: 20px; height: 20px; }
+  .tab {
+    flex: 1; height: 28px; background: #fff; border-radius: 6px; display: flex;
+    align-items: center; padding: 0 8px; gap: 7px;
+  }
+  .tab img { width: 15px; height: 15px; }
+  .tab .t { font-size: 12px; flex: 1; }
+  .tab .chev { width: 12px; height: 12px; opacity: .6; }
+
+  /* ---- toolbar ---- */
+  .toolbar { height: 46px; display: flex; align-items: center; padding: 0 6px 0 2px; gap: 0; flex: 0 0 auto; }
+  .address {
+    flex: 1.25; height: 34px; margin-left: 4px; background: #fff; border: 1px solid #E5E5E5;
+    border-radius: 4px; display: flex; align-items: center; padding: 0 2px; overflow: hidden;
+  }
+  .crumb {
+    display: flex; align-items: center; gap: 5px; height: 28px; padding: 0 6px;
+    border-radius: 4px; font-size: 13px; white-space: nowrap;
+  }
+  .crumb img { width: 16px; height: 16px; }
+  .crumb .chev { width: 10px; height: 10px; opacity: .5; }
+  .crumb.sel { background: #E5F1FB; }
+  .search {
+    flex: 1; height: 34px; margin-left: 6px; background: #fff; border: 1px solid #E5E5E5;
+    border-radius: 4px; display: flex; align-items: center; padding: 0 8px; gap: 6px;
+  }
+  .search img { width: 15px; height: 15px; opacity: .7; }
+  .search .hint { font-size: 13px; color: #9E9E9E; }
+
+  /* ---- command bar ---- */
+  .cmdbar {
+    height: 42px; background: #FAFAFA; display: flex; align-items: center;
+    padding: 0 6px; gap: 2px; border-bottom: 1px solid #E0E0E0; flex: 0 0 auto;
+  }
+  .cmd {
+    height: 30px; display: flex; align-items: center; gap: 7px; padding: 0 9px;
+    border-radius: 4px; font-size: 11px; white-space: nowrap;
+  }
+  .cmd img { width: 18px; height: 18px; }
+  .cmd .chev { width: 11px; height: 11px; opacity: .6; }
+  .spacer { flex: 1; }
+
+  /* ---- content ---- */
+  .content { flex: 1; background: #fff; overflow: hidden; }
+  .row {
+    height: 52px; display: flex; align-items: center; padding: 0 10px 0 10px; gap: 10px;
+  }
+  .row .ico { width: 22px; height: 22px; flex: 0 0 auto; }
+  .row .txt { flex: 1; min-width: 0; }
+  .row .n { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row .s { font-size: 11px; color: #616161; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row .meta { font-size: 11px; color: #616161; }
+  .row.sel { background: #E5F1FB; }
+
+  /* ---- status bar ---- */
+  .statusbar {
+    height: 26px; background: #F3F3F3; display: flex; align-items: center;
+    padding: 0 8px 0 12px; gap: 4px; font-size: 11px; color: #616161; flex: 0 0 auto;
+  }
+  .statusbar .st { flex: 1; }
+  .statusbar img { width: 15px; height: 15px; opacity: .6; }
+
+  /* ---- nav pane ---- */
+  .scrim { position: absolute; inset: 0; background: rgba(0,0,0,.32); }
+  .navpane {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 272px; background: #F3F3F3;
+    padding-top: 24px; box-shadow: 6px 0 18px rgba(0,0,0,.18);
+  }
+  .navpane .navtitle {
+    height: 40px; display: flex; align-items: center; padding: 0 16px;
+    font-size: 14px; font-weight: 600;
+  }
+  .navitem { height: 34px; display: flex; align-items: center; padding: 0 12px 0 14px; gap: 12px; }
+  .navitem img { width: 18px; height: 18px; }
+  .navitem .lbl { font-size: 13px; }
+  .navitem.sel { background: #E5F1FB; }
+  .navsect { height: 34px; display: flex; align-items: center; padding: 0 12px 0 14px; gap: 12px; }
+  .navsect img { width: 18px; height: 18px; }
+  .navsect .lbl { font-size: 13px; font-weight: 700; flex: 1; }
+  .navsect .chev { width: 12px; height: 12px; opacity: .6; }
+  .caption { text-align: center; font-size: 13px; color: #4a4a52; margin-top: 10px; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="phonerow">
+
+  <!-- ============ phone 1 : details view ============ -->
+  <div>
+  <div class="phone">
+    <div class="androidstatus"><span>9:41</span><span class="dots">▮▮▮ ⌁ ▰</span></div>
+
+    <div class="titlebar">
+      <div class="iconbtn"><img src="../tools/glyphs_raw/menu.png"></div>
+      <div class="tab">
+        <img src="../tools/icons_raw/folder.png">
+        <span class="t">内部存储</span>
+        <img class="chev" src="../tools/glyphs_raw/chevron_dn.png">
+      </div>
+      <div class="iconbtn"><img src="../tools/glyphs_raw/add.png"></div>
+    </div>
+
+    <div class="toolbar">
+      <div class="iconbtn"><img src="../tools/glyphs_raw/back.png"></div>
+      <div class="iconbtn"><img src="../tools/glyphs_raw/forward.png"></div>
+      <div class="iconbtn"><img src="../tools/glyphs_raw/up.png"></div>
+      <div class="iconbtn"><img src="../tools/glyphs_raw/refresh.png"></div>
+      <div class="address">
+        <div class="crumb"><img src="../tools/icons_raw/thispc.png">此手机<img class="chev" src="../tools/glyphs_raw/chevron_rt.png"></div>
+        <div class="crumb sel"><img src="../tools/icons_raw/folder.png">内部存储</div>
+      </div>
+      <div class="search"><img src="../tools/glyphs_raw/search.png"><span class="hint">搜索</span></div>
+    </div>
+
+    <div class="cmdbar">
+      <div class="cmd"><img src="../tools/glyphs_raw/add.png">新建<img class="chev" src="../tools/glyphs_raw/chevron_dn.png"></div>
+      <div class="cmd"><img src="../tools/glyphs_raw/cut.png">剪切</div>
+      <div class="cmd"><img src="../tools/glyphs_raw/copy.png">复制</div>
+      <div class="cmd"><img src="../tools/glyphs_raw/paste.png">粘贴</div>
+      <div class="cmd"><img src="../tools/glyphs_raw/rename.png">重命名</div>
+      <div class="cmd"><img src="../tools/glyphs_raw/delete.png">删除</div>
+      <div class="spacer"></div>
+      <div class="cmd"><img src="../tools/glyphs_raw/sort.png">排序</div>
+      <div class="cmd"><img src="../tools/glyphs_raw/view2.png">查看</div>
+    </div>
+
+    <div class="content">
+      <div class="row"><img class="ico" src="../tools/icons_raw/folder_dl.png"><div class="txt"><div class="n">Download</div><div class="s">2026/02/18 09:14  ·  文件夹</div></div></div>
+      <div class="row"><img class="ico" src="../tools/icons_raw/folder_docs.png"><div class="txt"><div class="n">Documents</div><div class="s">2026/02/17 21:02  ·  文件夹</div></div></div>
+      <div class="row"><img class="ico" src="../tools/icons_raw/folder_pics.png"><div class="txt"><div class="n">Pictures</div><div class="s">2026/02/18 08:31  ·  文件夹</div></div></div>
+      <div class="row"><img class="ico" src="../tools/icons_raw/folder_pics.png"><div class="txt"><div class="n">DCIM</div><div class="s">2026/02/16 19:47  ·  文件夹</div></div></div>
+      <div class="row"><img class="ico" src="../tools/icons_raw/folder_music.png"><div class="txt"><div class="n">Music</div><div class="s">2026/01/29 11:20  ·  文件夹</div></div></div>
+      <div class="row"><img class="ico" src="../tools/icons_raw/folder_vids.png"><div class="txt"><div class="n">Movies</div><div class="s">2026/02/11 15:08  ·  文件夹</div></div></div>
+      <div class="row"><img class="ico" src="../tools/icons_raw/folder.png"><div class="txt"><div class="n">Android</div><div class="s">2026/02/18 07:55  ·  文件夹</div></div></div>
+      <div class="row sel"><img class="ico" src="../tools/icons_raw/file_docx.png"><div class="txt"><div class="n">季度报告.docx</div><div class="s">2026/02/18 10:26  ·  Microsoft Word 文档</div></div><span class="meta">248 KB</span></div>
+      <div class="row"><img class="ico" src="../tools/icons_raw/file_xlsx.png"><div class="txt"><div class="n">预算表.xlsx</div><div class="s">2026/02/17 16:40  ·  Microsoft Excel 工作表</div></div><span class="meta">1.02 MB</span></div>
+      <div class="row"><img class="ico" src="../tools/icons_raw/file_pdf.png"><div class="txt"><div class="n">说明书.pdf</div><div class="s">2026/02/15 13:12  ·  PDF 文档</div></div><span class="meta">4.31 MB</span></div>
+      <div class="row"><img class="ico" src="../tools/icons_raw/file_jpg.png"><div class="txt"><div class="n">IMG_20260218.jpg</div><div class="s">2026/02/18 08:31  ·  JPG 图片文件</div></div><span class="meta">3.87 MB</span></div>
+      <div class="row"><img class="ico" src="../tools/icons_raw/file_m4a.png"><div class="txt"><div class="n">夜曲.mp3</div><div class="s">2026/01/30 22:05  ·  MP3 音频文件</div></div><span class="meta">8.44 MB</span></div>
+      <div class="row"><img class="ico" src="../tools/icons_raw/file_mp4.png"><div class="txt"><div class="n">旅行记录.mp4</div><div class="s">2026/02/09 18:22  ·  MP4 视频文件</div></div><span class="meta">182 MB</span></div>
+      <div class="row"><img class="ico" src="../tools/icons_raw/file_zip.png"><div class="txt"><div class="n">备份.zip</div><div class="s">2026/02/14 20:10  ·  压缩文件夹</div></div><span class="meta">56.2 MB</span></div>
+      <div class="row"><img class="ico" src="../tools/icons_raw/file_apk.png"><div class="txt"><div class="n">WeChat.apk</div><div class="s">2026/02/12 10:03  ·  Android 应用程序包</div></div><span class="meta">231 MB</span></div>
+    </div>
+
+    <div class="statusbar">
+      <span class="st">15 个项目</span>
+      <img src="../tools/glyphs_raw/details.png">
+      <img src="../tools/glyphs_raw/grid.png">
+    </div>
+  </div>
+  <div class="caption">详细信息视图</div>
+  </div>
+
+  <!-- ============ phone 2 : nav pane + large icons ============ -->
+  <div>
+  <div class="phone">
+    <div class="androidstatus"><span>9:41</span><span class="dots">▮▮▮ ⌁ ▰</span></div>
+
+    <div class="titlebar">
+      <div class="iconbtn"><img src="../tools/glyphs_raw/menu.png"></div>
+      <div class="tab">
+        <img src="../tools/icons_raw/thispc.png">
+        <span class="t">此手机</span>
+        <img class="chev" src="../tools/glyphs_raw/chevron_dn.png">
+      </div>
+      <div class="iconbtn"><img src="../tools/glyphs_raw/add.png"></div>
+    </div>
+
+    <div class="toolbar">
+      <div class="iconbtn"><img src="../tools/glyphs_raw/back.png"></div>
+      <div class="iconbtn"><img src="../tools/glyphs_raw/forward.png"></div>
+      <div class="iconbtn"><img src="../tools/glyphs_raw/up.png"></div>
+      <div class="iconbtn"><img src="../tools/glyphs_raw/refresh.png"></div>
+      <div class="address">
+        <div class="crumb sel"><img src="../tools/icons_raw/thispc.png">此手机</div>
+      </div>
+      <div class="search"><img src="../tools/glyphs_raw/search.png"><span class="hint">搜索</span></div>
+    </div>
+
+    <div class="cmdbar">
+      <div class="cmd"><img src="../tools/glyphs_raw/add.png">新建<img class="chev" src="../tools/glyphs_raw/chevron_dn.png"></div>
+      <div class="cmd"><img src="../tools/glyphs_raw/cut.png">剪切</div>
+      <div class="cmd"><img src="../tools/glyphs_raw/copy.png">复制</div>
+      <div class="cmd"><img src="../tools/glyphs_raw/paste.png">粘贴</div>
+      <div class="spacer"></div>
+      <div class="cmd"><img src="../tools/glyphs_raw/sort.png">排序</div>
+      <div class="cmd"><img src="../tools/glyphs_raw/view2.png">查看</div>
+    </div>
+
+    <div class="content" style="display:flex;flex-wrap:wrap;align-content:flex-start;padding:8px 0">
+      <div style="width:33.33%;padding:10px 6px;text-align:center">
+        <img style="width:64px;height:64px" src="../tools/icons_raw/drive.png">
+        <div style="font-size:11.5px;margin-top:6px;line-height:1.25">内部存储</div>
+      </div>
+      <div style="width:33.33%;padding:10px 6px;text-align:center">
+        <img style="width:64px;height:64px" src="../tools/icons_raw/drive.png">
+        <div style="font-size:11.5px;margin-top:6px;line-height:1.25">SD 卡</div>
+      </div>
+      <div style="width:33.33%;padding:10px 6px;text-align:center">
+        <img style="width:64px;height:64px" src="../tools/icons_raw/network.png">
+        <div style="font-size:11.5px;margin-top:6px;line-height:1.25">网络</div>
+      </div>
+      <div style="width:33.33%;padding:10px 6px;text-align:center">
+        <img style="width:64px;height:64px" src="../tools/icons_raw/folder_dl.png">
+        <div style="font-size:11.5px;margin-top:6px;line-height:1.25">下载</div>
+      </div>
+      <div style="width:33.33%;padding:10px 6px;text-align:center">
+        <img style="width:64px;height:64px" src="../tools/icons_raw/folder_docs.png">
+        <div style="font-size:11.5px;margin-top:6px;line-height:1.25">文档</div>
+      </div>
+      <div style="width:33.33%;padding:10px 6px;text-align:center">
+        <img style="width:64px;height:64px" src="../tools/icons_raw/folder_pics.png">
+        <div style="font-size:11.5px;margin-top:6px;line-height:1.25">图片</div>
+      </div>
+      <div style="width:33.33%;padding:10px 6px;text-align:center">
+        <img style="width:64px;height:64px" src="../tools/icons_raw/folder_music.png">
+        <div style="font-size:11.5px;margin-top:6px;line-height:1.25">音乐</div>
+      </div>
+      <div style="width:33.33%;padding:10px 6px;text-align:center">
+        <img style="width:64px;height:64px" src="../tools/icons_raw/folder_vids.png">
+        <div style="font-size:11.5px;margin-top:6px;line-height:1.25">视频</div>
+      </div>
+      <div style="width:33.33%;padding:10px 6px;text-align:center">
+        <img style="width:64px;height:64px" src="../tools/icons_raw/folder.png">
+        <div style="font-size:11.5px;margin-top:6px;line-height:1.25">Android</div>
+      </div>
+    </div>
+
+    <div class="statusbar">
+      <span class="st">9 个驱动器</span>
+      <img src="../tools/glyphs_raw/details.png">
+      <img src="../tools/glyphs_raw/grid.png">
+    </div>
+
+    <!-- nav pane overlay -->
+    <div class="scrim"></div>
+    <div class="navpane">
+      <div class="navtitle">此手机</div>
+      <div class="navitem"><img src="../tools/glyphs_raw/home.png"><span class="lbl">主页</span></div>
+      <div class="navitem"><img src="../tools/icons_raw/gallery.png"><span class="lbl">图库</span></div>
+      <div class="navsect"><img src="../tools/icons_raw/thispc.png"><span class="lbl">此手机</span><img class="chev" src="../tools/glyphs_raw/chevron_dn.png"></div>
+      <div class="navitem"><img src="../tools/icons_raw/folder_dl.png"><span class="lbl">下载</span></div>
+      <div class="navitem"><img src="../tools/icons_raw/folder_docs.png"><span class="lbl">文档</span></div>
+      <div class="navitem"><img src="../tools/icons_raw/folder_pics.png"><span class="lbl">图片</span></div>
+      <div class="navitem"><img src="../tools/icons_raw/folder_pics.png"><span class="lbl">相机</span></div>
+      <div class="navitem"><img src="../tools/icons_raw/folder_music.png"><span class="lbl">音乐</span></div>
+      <div class="navitem"><img src="../tools/icons_raw/folder_vids.png"><span class="lbl">视频</span></div>
+      <div class="navitem sel"><img src="../tools/icons_raw/drive.png"><span class="lbl">内部存储</span></div>
+      <div class="navitem"><img src="../tools/icons_raw/drive.png"><span class="lbl">SD 卡</span></div>
+      <div class="navitem"><img src="../tools/icons_raw/network.png"><span class="lbl">网络</span></div>
+      <div class="navitem"><img src="../tools/icons_raw/recyclebin.png"><span class="lbl">回收站</span></div>
+    </div>
+  </div>
+  <div class="caption">导航窗格 · 大图标视图</div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cmdRoot"
+    android:layout_width="wrap_content"
+    android:layout_height="30dp"
+    android:background="@drawable/bg_command_button"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:minWidth="48dp"
+    android:orientation="horizontal"
+    android:paddingStart="9dp"
+    android:paddingEnd="9dp">
+
+    <ImageView
+        android:id="@+id/cmdIcon"
+        android:layout_width="@dimen/cmd_icon"
+        android:layout_height="@dimen/cmd_icon"
+        android:scaleType="fitCenter"
+        app:tint="@color/icon_tint" />
+
+    <TextView
+        android:id="@+id/cmdLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:singleLine="true"
+        android:textColor="@color/win_text"
+        android:textSize="@dimen/text_command" />
+
+    <ImageView
+        android:id="@+id/cmdArrow"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginStart="4dp"
+        android:alpha="0.65"
+        android:scaleType="fitCenter"
+        android:src="@drawable/g_chevron_dn"
+        android:visibility="gone"
+        app:tint="@color/icon_tint" />
+</LinearLayout>
