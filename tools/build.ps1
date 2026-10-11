@@ -8,7 +8,7 @@ param(
 )
 
 $ErrorActionPreference = 'Continue'
-$root = 'E:\此电脑'
+$root = if ($PSScriptRoot) { Split-Path -Parent $PSScriptRoot } elseif ($env:PHONEPC_ROOT) { $env:PHONEPC_ROOT } else { (Get-Location).Path }
 $proj = Join-Path $root 'PhonePC'
 $log  = Join-Path $root 'tools\build.log'
 

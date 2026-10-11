@@ -1,3 +1,8 @@
+# project root: this script lives in <root>\tools
+$root = if ($PSScriptRoot) { Split-Path -Parent $PSScriptRoot }
+        elseif ($env:PHONEPC_ROOT) { $env:PHONEPC_ROOT }
+        else { (Get-Location).Path }
+
 # Validate the bge-small-zh ONNX bundle before integrating it.
 #
 # A surprisingly common failure: the "download" is actually an HTML error page
@@ -5,7 +10,7 @@
 # catches that before it turns into a confusing runtime error.
 
 $ErrorActionPreference = 'Stop'
-$dir = 'E:\此电脑\models\bge-small-zh'
+$dir = (Join-Path $root '')
 
 if (-not (Test-Path $dir)) {
     "MISSING: $dir does not exist"

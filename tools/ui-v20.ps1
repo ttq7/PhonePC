@@ -1,8 +1,13 @@
+# project root: this script lives in <root>\tools
+$root = if ($PSScriptRoot) { Split-Path -Parent $PSScriptRoot }
+        elseif ($env:PHONEPC_ROOT) { $env:PHONEPC_ROOT }
+        else { (Get-Location).Path }
+
 # v2.0: + tile, phone launcher icon, long-press context menu.
 $sdk = 'C:\Users\asd32\AppData\Local\TyranoToolKit\android-sdk'
 $adb = "$sdk\platform-tools\adb.exe"
 $dev = 'emulator-5554'
-$dir = 'E:\此电脑\preview\v20'
+$dir = (Join-Path $root '')
 if (Test-Path $dir) { Remove-Item $dir -Recurse -Force }
 New-Item -ItemType Directory -Force -Path $dir | Out-Null
 

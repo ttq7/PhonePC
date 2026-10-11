@@ -1,7 +1,12 @@
+# project root: this script lives in <root>\tools
+$root = if ($PSScriptRoot) { Split-Path -Parent $PSScriptRoot }
+        elseif ($env:PHONEPC_ROOT) { $env:PHONEPC_ROOT }
+        else { (Get-Location).Path }
+
 $sdk = 'C:\Users\asd32\AppData\Local\TyranoToolKit\android-sdk'
 $adb = "$sdk\platform-tools\adb.exe"
 $dev = 'emulator-5554'
-$dir = 'E:\此电脑\promo\raw'
+$dir = (Join-Path $root '')
 function A { & $adb -s $dev @args }
 function Tap([int]$x, [int]$y) { A shell input tap $x $y | Out-Null; Start-Sleep -Milliseconds 1100 }
 function Fresh { A shell am force-stop com.phonepc.explorer | Out-Null; Start-Sleep -Milliseconds 700 }

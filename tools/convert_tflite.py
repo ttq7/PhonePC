@@ -5,11 +5,14 @@ The conversion runs once at build time, the size saving is permanent.
 
 Run:  python tools\convert_tflite.py
 """
+
+import os
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import os
 import subprocess
 import sys
 
-BASE = r'E:\此电脑\models\bge-small-zh'
+BASE = os.path.join(ROOT, 'models', 'bge-small-zh')
 SRC = os.path.join(BASE, 'model_quantized.onnx')
 OUT = os.path.join(BASE, 'tflite')
 SAVED = os.path.join(OUT, 'saved_model')

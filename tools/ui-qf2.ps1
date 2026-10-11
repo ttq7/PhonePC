@@ -1,7 +1,12 @@
+# project root: this script lives in <root>\tools
+$root = if ($PSScriptRoot) { Split-Path -Parent $PSScriptRoot }
+        elseif ($env:PHONEPC_ROOT) { $env:PHONEPC_ROOT }
+        else { (Get-Location).Path }
+
 $sdk = 'C:\Users\asd32\AppData\Local\TyranoToolKit\android-sdk'
 $adb = "$sdk\platform-tools\adb.exe"
 $dev = 'emulator-5554'
-$dir = 'E:\此电脑\preview\qf'
+$dir = (Join-Path $root '')
 if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Force -Path $dir | Out-Null }
 
 function A { & $adb -s $dev @args }

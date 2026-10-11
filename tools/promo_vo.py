@@ -3,12 +3,15 @@
 Each line is written to its own MP3 so it can be placed at an exact time on the
 timeline; a single continuous take would drift out of sync with the cuts.
 """
+
+import os
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import asyncio
 import os
 
 import edge_tts
 
-OUT = r'E:\此电脑\promo\vo'
+OUT = os.path.join(ROOT, 'promo', 'vo')
 os.makedirs(OUT, exist_ok=True)
 
 VOICE = 'zh-CN-YunjianNeural'      # energetic male, the usual promo register

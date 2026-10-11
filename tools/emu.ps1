@@ -1,4 +1,6 @@
-# Headless Android emulator control for real-device verification of PhonePC.
+# Headless Android emulator control for real-device verification of PhonePC
+$root = if ($PSScriptRoot) { Split-Path -Parent $PSScriptRoot } elseif ($env:PHONEPC_ROOT) { $env:PHONEPC_ROOT } else { (Get-Location).Path }
+.
 # Actions: create | accel | run | wait | stop | status
 # Everything (AVD home, logs) stays inside the workspace.
 
@@ -15,7 +17,7 @@ param(
 
 $ErrorActionPreference = 'Continue'
 
-$root    = 'E:\此电脑'
+$root    = $root
 $sdk     = 'C:\Users\asd32\AppData\Local\TyranoToolKit\android-sdk'
 $avdHome = Join-Path $root '.android-home\avd'
 

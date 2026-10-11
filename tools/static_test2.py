@@ -1,13 +1,16 @@
 import os
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+import os
 import sys
 
 import numpy as np
 import onnx
 
-sys.path.insert(0, r'E:\此电脑\tools')
+sys.path.insert(0, os.path.join(ROOT, 'tools'))
 from bert_tok import BertTokenizer
 
-BASE = r'E:\此电脑\models\bge-small-zh'
+BASE = os.path.join(ROOT, 'models', 'bge-small-zh')
 model = onnx.load(os.path.join(BASE, 'model_quantized.onnx'))
 g = model.graph
 init = {i.name: i for i in g.initializer}
@@ -42,7 +45,7 @@ else:
     arr = arr * scale.astype(np.float32).reshape(1, -1)
 
 print('table', arr.shape, '%.2f MB fp32, %.2f MB int8' % (arr.nbytes / 1e6, arr.size / 1e6))
-np.save(r'E:\此电脑\models\bge-small-zh\emb_table.npy', arr.astype(np.float32))
+np.save(os.path.join(ROOT, 'models', 'bge-small-zh', 'emb_table.npy'), arr.astype(np.float32))
 print()
 
 tk = BertTokenizer(os.path.join(BASE, 'tokenizer.json'))

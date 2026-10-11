@@ -1,6 +1,9 @@
+import os
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 import json
 
-d = json.load(open(r'E:\此电脑\models\bge-small-zh\tokenizer.json', encoding='utf-8'))
+d = json.load(open(os.path.join(ROOT, 'models', 'bge-small-zh', 'tokenizer.json'), encoding='utf-8'))
 print('top-level keys:', list(d.keys()))
 print()
 print('normalizer   :', json.dumps(d.get('normalizer'), ensure_ascii=False)[:400])

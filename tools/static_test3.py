@@ -1,13 +1,16 @@
 import os
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+import os
 import sys
 
 import numpy as np
 import onnx
 
-sys.path.insert(0, r'E:\此电脑\tools')
+sys.path.insert(0, os.path.join(ROOT, 'tools'))
 from bert_tok import BertTokenizer
 
-BASE = r'E:\此电脑\models\bge-small-zh'
+BASE = os.path.join(ROOT, 'models', 'bge-small-zh')
 g = onnx.load(BASE + r'\model_quantized.onnx').graph
 init = {i.name: i for i in g.initializer}
 raw = onnx.numpy_helper.to_array(init['embeddings.word_embeddings.weight_quantized'])

@@ -6,6 +6,9 @@ the embeddings actually rank sensible anchors for natural-language file queries.
 
 Run:  python tools\probe_model.py
 """
+
+import os
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import json
 import time
 import unicodedata
@@ -13,8 +16,8 @@ import unicodedata
 import numpy as np
 import onnxruntime as ort
 
-MODEL = r'E:\此电脑\models\bge-small-zh\model_quantized.onnx'
-TOKJSON = r'E:\此电脑\models\bge-small-zh\tokenizer.json'
+MODEL = os.path.join(ROOT, 'models', 'bge-small-zh', 'model_quantized.onnx')
+TOKJSON = os.path.join(ROOT, 'models', 'bge-small-zh', 'tokenizer.json')
 
 
 # ---------------------------------------------------------------- normalizer

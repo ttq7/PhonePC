@@ -1,9 +1,12 @@
 """Dump the BERT vocab in id order so Kotlin can load it without a JSON parser."""
+
+import os
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import json
 import os
 
-BASE = r'E:\此电脑\models\bge-small-zh'
-OUT = r'E:\此电脑\PhonePC\app\src\main\assets\vocab.txt'
+BASE = os.path.join(ROOT, 'models', 'bge-small-zh')
+OUT = os.path.join(ROOT, 'PhonePC', 'app', 'src', 'main', 'assets', 'vocab.txt')
 
 d = json.load(open(os.path.join(BASE, 'tokenizer.json'), encoding='utf-8'))
 vocab = d['model']['vocab']

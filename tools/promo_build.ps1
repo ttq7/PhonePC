@@ -1,8 +1,10 @@
+$root = if ($PSScriptRoot) { Split-Path -Parent $PSScriptRoot } elseif ($env:PHONEPC_ROOT) { $env:PHONEPC_ROOT } else { (Get-Location).Path }
+
 $ErrorActionPreference = 'Stop'
-$root = 'E:\此电脑\promo'
+$root = (Join-Path $root '')
 $raw  = Join-Path $root 'raw'
 $work = Join-Path $root 'work'
-$out  = 'E:\此电脑\dist\此手机-宣传片.mp4'
+$out  = (Join-Path $root '')
 
 $W = 1080; $H = 2400; $FPS = 30
 $V = "-c:v libx264 -preset medium -crf 20 -pix_fmt yuv420p -r $FPS -movflags +faststart"

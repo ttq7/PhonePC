@@ -1,4 +1,6 @@
-# Stage extracted Windows artwork into Android resource folders at every density.
+# Stage extracted Windows ar
+$root = if ($PSScriptRoot) { Split-Path -Parent $PSScriptRoot } elseif ($env:PHONEPC_ROOT) { $env:PHONEPC_ROOT } else { (Get-Location).Path }
+twork into Android resource folders at every density.
 
 param(
     [string]$Root

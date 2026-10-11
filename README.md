@@ -12,7 +12,7 @@
 ## 1. 目录结构
 
 ```
-E:\此电脑\
+
 ├─ PhonePC\                  Android 工程（Gradle）
 │  ├─ app\src\main\
 │  │  ├─ java\com\phonepc\explorer\
@@ -124,7 +124,7 @@ E:\此电脑\
 ## 4. 编译
 
 本机工具链：JDK 21、Gradle 8.9、Android SDK（android-36 / build-tools 36.0.0）。
-`gradle.properties` 里有两个**因为工程位于 `E:\此电脑`（非 ASCII 路径）而必须加**的开关，已配置好：
+`gradle.properties` 里有两个**因为工程位于 `<项目根>`（非 ASCII 路径）而必须加**的开关，已配置好：
 
 ```properties
 android.overridePathCheck=true          # 让 AGP 放行非 ASCII 工程路径
@@ -136,20 +136,20 @@ kotlin.compiler.execution.strategy=in-process
 一键编译（沙箱内即可，依赖缓存和 Android 用户目录都放在工作区里）：
 
 ```powershell
-powershell -File E:\此电脑\tools\build.ps1                 # 默认 assembleDebug
-powershell -File E:\此电脑\tools\build.ps1 -Task clean
+powershell -File tools\build.ps1                 # 默认 assembleDebug
+powershell -File tools\build.ps1 -Task clean
 ```
 
 或手动：
 
 ```powershell
-$env:GRADLE_USER_HOME='E:\此电脑\.gradle-home'
+$env:GRADLE_USER_HOME='.gradle-home'
 $env:ANDROID_HOME='C:\Users\asd32\AppData\Local\TyranoToolKit\android-sdk'
 & 'C:\Users\asd32\AppData\Local\TyranoToolKit\gradle\gradle-8.9\bin\gradle.bat' `
-  -p 'E:\此电脑\PhonePC' assembleDebug
+  -p 'PhonePC' assembleDebug
 ```
 
-**安装**：`adb install -r "E:\此电脑\dist\此手机-1.2-debug.apk"`
+**安装**：`adb install -r "dist\此手机-1.2-debug.apk"`
 
 ## 4.1 在模拟器上实机验证
 
@@ -158,17 +158,17 @@ $env:ANDROID_HOME='C:\Users\asd32\AppData\Local\TyranoToolKit\android-sdk'
 ```powershell
 # 一次性：装 emulator + 系统镜像，建 AVD（约 1.2GB）
 & sdkmanager --install "emulator" "system-images;android-35;google_apis;x86_64"
-powershell -File E:\此电脑\tools\emu.ps1 -Action create
+powershell -File tools\emu.ps1 -Action create
 
 # 启动（前台常驻，放后台任务里跑）
-powershell -File E:\此电脑\tools\emu.ps1 -Action run
-powershell -File E:\此电脑\tools\emu.ps1 -Action wait      # 等 sys.boot_completed
+powershell -File tools\emu.ps1 -Action run
+powershell -File tools\emu.ps1 -Action wait      # 等 sys.boot_completed
 
 # 装包 + 授权 + 灌测试数据 + 启动 + 截图
-powershell -File E:\此电脑\tools\deploy.ps1 -Action deploy
-powershell -File E:\此电脑\tools\ui4.ps1                   # 逐屏巡检
+powershell -File tools\deploy.ps1 -Action deploy
+powershell -File tools\ui4.ps1                   # 逐屏巡检
 
-powershell -File E:\此电脑\tools\emu.ps1 -Action stop
+powershell -File tools\emu.ps1 -Action stop
 ```
 
 关键点：`appops set com.phonepc.explorer MANAGE_EXTERNAL_STORAGE allow` 可以免去手点系统设置页授权。

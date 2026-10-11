@@ -1,8 +1,13 @@
+# project root: this script lives in <root>\tools
+$root = if ($PSScriptRoot) { Split-Path -Parent $PSScriptRoot }
+        elseif ($env:PHONEPC_ROOT) { $env:PHONEPC_ROOT }
+        else { (Get-Location).Path }
+
 # Verify the breadcrumb root keeps the phone icon after navigating.
 $sdk = 'C:\Users\asd32\AppData\Local\TyranoToolKit\android-sdk'
 $adb = "$sdk\platform-tools\adb.exe"
 $dev = 'emulator-5554'
-$dir = 'E:\此电脑\preview\icon'
+$dir = (Join-Path $root '')
 if (Test-Path $dir) { Remove-Item $dir -Recurse -Force }
 New-Item -ItemType Directory -Force -Path $dir | Out-Null
 

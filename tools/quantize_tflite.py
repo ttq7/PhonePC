@@ -6,6 +6,9 @@ of realistic Chinese file-search phrases with the verified tokenizer.
 
 Run:  python tools\quantize_tflite.py
 """
+
+import os
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import itertools
 import os
 import subprocess
@@ -16,7 +19,7 @@ import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from bert_tok import BertTokenizer
 
-BASE = r'E:\此电脑\models\bge-small-zh'
+BASE = os.path.join(ROOT, 'models', 'bge-small-zh')
 SRC = os.path.join(BASE, 'model_quantized.onnx')
 TOKJSON = os.path.join(BASE, 'tokenizer.json')
 OUT = os.path.join(BASE, 'tflite')

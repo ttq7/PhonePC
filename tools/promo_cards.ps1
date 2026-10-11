@@ -1,11 +1,13 @@
+$root = if ($PSScriptRoot) { Split-Path -Parent $PSScriptRoot } elseif ($env:PHONEPC_ROOT) { $env:PHONEPC_ROOT } else { (Get-Location).Path }
+
 # Build the promo film: title card, captioned clips, end card.
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
 
-$root = 'E:\此电脑\promo'
+$root = (Join-Path $root '')
 $raw  = Join-Path $root 'raw'
 $work = Join-Path $root 'work'
-$out  = 'E:\此电脑\dist\此手机-宣传片.mp4'
+$out  = (Join-Path $root '')
 foreach ($d in @($work, (Split-Path $out))) { New-Item -ItemType Directory -Force -Path $d | Out-Null }
 Get-ChildItem $work -ErrorAction SilentlyContinue | Remove-Item -Force
 

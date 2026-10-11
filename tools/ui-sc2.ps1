@@ -1,3 +1,5 @@
+$root = if ($PSScriptRoot) { Split-Path -Parent $PSScriptRoot } elseif ($env:PHONEPC_ROOT) { $env:PHONEPC_ROOT } else { (Get-Location).Path }
+
 $sdk = 'C:\Users\asd32\AppData\Local\TyranoToolKit\android-sdk'
 $adb = "$sdk\platform-tools\adb.exe"
 $dev = 'emulator-5554'
@@ -10,7 +12,7 @@ function Dump {
 function Shot([string]$n) {
     $r = "/sdcard/_s_$n.png"
     A shell screencap -p $r | Out-Null
-    $l = "E:\此电脑\preview\sc\$n.png"
+    $l = (Join-Path $root "preview\sc\$n.png")
     if (Test-Path $l) { Remove-Item $l -Force }
     A pull $r $l 2>&1 | Out-Null
     A shell rm $r | Out-Null

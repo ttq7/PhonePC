@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     private val searchDebounce = Runnable { applyFilter() }
 
     // ---- state ------------------------------------------------------------
-    private var currentPath: String? = null            // null == virtual "此电脑"
+    private var currentPath: String? = null            // null == the virtual device root (labelled 此电脑 in Windows terms)
     private var allEntries: List<FsEntry> = emptyList()
     private var entries: List<FsEntry> = emptyList()
     private var storageRoots: List<FsEntry> = emptyList()

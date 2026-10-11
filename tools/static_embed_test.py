@@ -7,6 +7,9 @@ toolchain.
 
 Run:  python tools\static_embed_test.py
 """
+
+import os
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import os
 import sys
 
@@ -16,7 +19,7 @@ import onnx
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from bert_tok import BertTokenizer
 
-BASE = r'E:\此电脑\models\bge-small-zh'
+BASE = os.path.join(ROOT, 'models', 'bge-small-zh')
 ONNX = os.path.join(BASE, 'model_quantized.onnx')
 TOKJSON = os.path.join(BASE, 'tokenizer.json')
 

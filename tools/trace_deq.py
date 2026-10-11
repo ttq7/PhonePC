@@ -1,7 +1,10 @@
+import os
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 import numpy as np
 import onnx
 
-BASE = r'E:\此电脑\models\bge-small-zh'
+BASE = os.path.join(ROOT, 'models', 'bge-small-zh')
 g = onnx.load(BASE + r'\model_quantized.onnx').graph
 init = {i.name: i for i in g.initializer}
 

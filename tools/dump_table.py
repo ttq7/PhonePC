@@ -4,13 +4,16 @@ Layout: row = token id, 512 bytes per row, 21128 rows.
 Values are uint8 with zero-point 128; the Kotlin side subtracts 128 and mean-pools.
 The per-tensor scale cancels out under cosine similarity, so it is not stored.
 """
+
+import os
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import os
 
 import numpy as np
 import onnx
 
-BASE = r'E:\此电脑\models\bge-small-zh'
-OUT_DIR = r'E:\此电脑\PhonePC\app\src\main\assets'
+BASE = os.path.join(ROOT, 'models', 'bge-small-zh')
+OUT_DIR = os.path.join(ROOT, 'PhonePC', 'app', 'src', 'main', 'assets')
 OUT = os.path.join(OUT_DIR, 'emb_u8.bin')
 
 g = onnx.load(os.path.join(BASE, 'model_quantized.onnx')).graph
